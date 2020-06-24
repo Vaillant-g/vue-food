@@ -13,10 +13,14 @@
 <body>
     <div id="app">
         <header>
+
             <nav class="navbar navbar-dark bg-dark">
-                <a class="navbar-brand"> {{ restaurantName}} </a>
-                <span>Panier</span>
+                <div class="container">
+                    <a class="navbar-brand"> {{ restaurantName}} </a>
+                    <span>Panier</span>
+                </div>
             </nav>
+
 
         </header>
 
@@ -28,27 +32,26 @@
             </li>
         </ul>
         <!--  panier temporaire -->
-
-        <h1>Produit disponibles</h1>
-        <div class container>
-            <div class="row">
-                <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="command"></itemdetails>
+        <div class="container">
+            <h1>Produit disponibles</h1>
+            <div class container>
+                <div class="row">
+                    <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="command"></itemdetails>
+                </div>
             </div>
         </div>
-
-
-
     </div>
     <script>
         Vue.component('itemdetails', {
             template: `
 
             <div class="itemdetail col-3">
+            <img v-bind:src=" item.picture" width="100%"/>
                 <h4>
                     {{ item.name }}            
                 </h4>
                 <p> {{ item.description }} </p>
-                <p> {{ item.price }}€ <button class="btn btn-outline-secondary" v-on:click="addItem(item)">Ajouter</button> </p>
+                <p> {{ item.price }}€ <button class="btn btn-outline-secondary float-right" v-on:click="addItem(item)">Ajouter</button> </p>
             </div>         
             
             `,
@@ -66,12 +69,12 @@
             data: {
                 restaurantName: "Vue food",
                 products: [
-                    { name: 'Hamburger', category: 'main', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
-                    { name: 'Rouleaux de printemps', category: 'main', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 12 },
-                    { name: 'Burritos', category: 'main', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
-                    { name: 'Gateau de savoie', category: 'dessert', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 4 },
-                    { name: 'Tiramisu', category: 'dessert', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
-                    { name: 'Kouign Amann', category: 'dessert', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
+                    { name: 'Hamburger', category: 'main', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
+                    { name: 'Rouleaux de printemps', category: 'main', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 12 },
+                    { name: 'Burritos', category: 'main', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
+                    { name: 'Gateau de savoie', category: 'dessert', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 4 },
+                    { name: 'Tiramisu', category: 'dessert', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
+                    { name: 'Kouign Amann', category: 'dessert', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
                 ],
                 order: [],
             },
