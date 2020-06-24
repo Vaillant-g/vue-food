@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Food</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand"> {{ restaurantName}} </a>
+                <span>Panier</span>
+            </nav>
+
+        </header>
+
+        <!--  panier temporaire -->
+        <h1 v-if='order.length > 0'> Produits commmandés</h1>
+        <ul>
+            <li v-for="item in order">
+                {{item.name}}
+            </li>
+        </ul>
+        <!--  panier temporaire -->
+
+        <h1>Produit disponibles</h1>
+        <div class container>
+            <div class="row">
+                <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="command"></itemdetails>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script>
+        Vue.component('itemdetails', {
+            template: `
+
+            <div class="itemdetail col-3">
+                <h4>
+                    {{ item.name }}            
+                </h4>
+                <p> {{ item.description }} </p>
+                <p> {{ item.price }}€ <button class="btn btn-outline-secondary" v-on:click="addItem(item)">Ajouter</button> </p>
+            </div>         
+            
+            `,
+            props: ['item'],
+            methods: {
+                addItem: function (item) {
+                    console.log(item);
+                    this.$emit('item-added', item)
+                }
+            }
+        });
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                restaurantName: "Vue food",
+                products: [
+                    { name: 'Hamburger', category: 'main', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
+                    { name: 'Rouleaux de printemps', category: 'main', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 12 },
+                    { name: 'Burritos', category: 'main', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
+                    { name: 'Gateau de savoie', category: 'dessert', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 4 },
+                    { name: 'Tiramisu', category: 'dessert', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
+                    { name: 'Kouign Amann', category: 'dessert', picture: '../img./burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
+                ],
+                order: [],
+            },
+            methods: {
+                command: function (item) {
+                    this.order.push(item);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
