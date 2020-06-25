@@ -5,86 +5,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Food</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="style.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
 </head>
 
 <body>
     <div id="app">
         <header>
-
-            <nav class="navbar navbar-dark bg-dark">
+            <nav class="navbar navbar-dark bg-dark fixed-top">
                 <div class="container">
                     <a class="navbar-brand"> {{ restaurantName}} </a>
-                    <span>Panier</span>
+                    <ul class="navbar-right">
+                        <button v-on:click="displayCart = !displayCart"
+                            style="border:none; background-color: transparent;">
+                            <a href="#" id="cartlogo"><i class="fa fa-shopping-cart"></i><span class="badge"
+                                    v-on:click="displayCart = !displayCart"></span>
+                                ({{ this.totalOfProducts }})</span></a>
+                        </button>
+                    </ul>
+                    <!--end navbar-right -->
                 </div>
             </nav>
-
-
         </header>
 
-        <!--  panier temporaire -->
-        <h1 v-if='order.length > 0'> Produits commmandés</h1>
-        <ul>
-            <li v-for="item in order">
-                {{item.name}}
-            </li>
-        </ul>
-        <!--  panier temporaire -->
-        <div class="container">
-            <h1>Produit disponibles</h1>
+        <!--  panier  -->
+        <transition name="fade">
+            <div class="container">
+                <div id="cart" v-if="displayCart">
+                    <ul>
+                        <li v-for="item in products" v-if="item.ordered > 0">
+                            {{item.name}} : x {{item.ordered}}
+                            <span class="float-right left_margin">{{item.price * item.ordered}}€</span>
+                        </li>
+                    </ul>
+                    <p>
+                        <hr />Total : <button
+                            class="float-right btn btn-outline-success left_margin">{{this.totalAmount }}
+                            €</span></p>
+                </div>
+            </div>
+        </transition>
+        <!-- fin panier temporaire -->
+        <router-view></router-view>
+        <!-- vue routage -->
+        <div class="container product-list">
+            <div class="row">
+                <div class="col">
+                    <h2>Bienvenue chez {{ restaurantName }} <span class="float-right"></h2>
+                </div>
+                <div class=''>
+                    <select v-model="selected" class="form-control">
+                        <option selected>Tout</option>
+                        <option>Plats</option>
+                        <option>Desserts</option>
+                    </select>
+                </div>
+
+            </div>
             <div class container>
                 <div class="row">
-                    <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="command"></itemdetails>
+                    <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="addToOrder"
+                        v-on:item-removed="removeFromOrder" v-if="selected == 'Tout' || item.category == selected">
+                    </itemdetails>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        Vue.component('itemdetails', {
-            template: `
 
-            <div class="itemdetail col-3">
-            <img v-bind:src=" item.picture" width="100%"/>
-                <h4>
-                    {{ item.name }}            
-                </h4>
-                <p> {{ item.description }} </p>
-                <p> {{ item.price }}€ <button class="btn btn-outline-secondary float-right" v-on:click="addItem(item)">Ajouter</button> </p>
-            </div>         
-            
-            `,
-            props: ['item'],
-            methods: {
-                addItem: function (item) {
-                    console.log(item);
-                    this.$emit('item-added', item)
-                }
-            }
-        });
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <span class="text-muted">Gautier Vaillant Juin 2020</span>
+            </div>
+        </div>
+    </footer>
 
-        var app = new Vue({
-            el: '#app',
-            data: {
-                restaurantName: "Vue food",
-                products: [
-                    { name: 'Hamburger', category: 'main', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
-                    { name: 'Rouleaux de printemps', category: 'main', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 12 },
-                    { name: 'Burritos', category: 'main', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 10 },
-                    { name: 'Gateau de savoie', category: 'dessert', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 4 },
-                    { name: 'Tiramisu', category: 'dessert', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
-                    { name: 'Kouign Amann', category: 'dessert', picture: './img/burger.jpg', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', price: 6 },
-                ],
-                order: [],
-            },
-            methods: {
-                command: function (item) {
-                    this.order.push(item);
-                }
-            }
-        })
-    </script>
+    <script type="text/javascript" src="index.js"></script>
 </body>
 
 </html>

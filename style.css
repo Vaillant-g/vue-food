@@ -1,0 +1,57 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+
+body {
+    margin-top: 80px !important;
+}
+
+.miniature_produit {
+    width: 100%;
+}
+
+ul {
+    list-style:none;
+    padding: 0;
+}
+
+.itemdetail {
+    margin: 0px;
+    padding: 05px;
+}
+
+#cart {
+    z-index: 1;
+    margin: 20px 0;
+    float: right;
+    background: white;
+    box-shadow: 0 0 10px gray;
+    /* width: 320px; */
+    position: absolute;
+    border-radius: 3px;
+    padding: 20px;
+    display:block
+}
+
+.left_margin {
+    margin-left: 150px;
+}
+
+#cart  p {
+    margin-bottom: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+
+
+.product-list select {
+    display: inline;
+}
+
+.footer   {
+    padding:15px;
+    background-color: gainsboro;
+}
