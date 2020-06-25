@@ -11,12 +11,11 @@ html, body {
     background-color: #ffffff;
 }
 footer {
-    height: 100px;
+ 
     background-color: #eee;
     padding-top: 15px;
     padding-left: 15px;
 }
-
 body {
     margin-top: 80px !important;
 }

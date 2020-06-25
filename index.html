@@ -31,7 +31,6 @@
                 </div>
             </nav>
         </header>
-
         <!--  panier  -->
         <transition name="fade">
             <div class="container">
@@ -41,8 +40,10 @@
                             <span v-show="this.totalAmount == 0">Votre panier est vide</span>
                             <ul>
                                 <li v-for="item in products" v-if="item.ordered > 0">
-                                    <span class="fake_button" v-on:click="item.ordered += 1"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                    <span class="fake_button" v-on:click="item.ordered -= 1"><i class="fa fa-minus" aria-hidden="true"></i></span> <!-- ne peut être négatif-->
+                                    <span class="fake_button" v-on:click="item.ordered += 1"><i class="fa fa-plus"
+                                            aria-hidden="true"></i></span>
+                                    <span class="fake_button" v-on:click="item.ordered -= 1"><i class="fa fa-minus"
+                                            aria-hidden="true"></i></span> <!-- ne peut être négatif-->
                                     &nbsp
                                     {{item.name}} : x {{item.ordered}}
                                     <span class="float-right left_margin">{{item.price * item.ordered}}€</span>
@@ -57,7 +58,6 @@
                 </div>
             </div>
         </transition>
-        <router-view></router-view>
         <div class="wrapper">
             <div class="container product-list">
                 <div class="row">
@@ -75,22 +75,30 @@
                 </div>
                 <div class container>
                     <div class="row">
-                        <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="addToOrder"v-on:item-removed="removeFromOrder" v-if="selected == 'Tout' || item.category == selected">
+                        <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="addToOrder"
+                            v-on:item-removed="removeFromOrder" v-if="selected == 'Tout' || item.category == selected">
                         </itemdetails>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <footer>
+            <div class="container">
+                <div class="row">
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <span class="text-muted">Gautier Vaillant Juin 2020</span>
+                    <nav>
+                        <router-link to="/contact">Contact</router-link>
+                        <router-link to="/about">A propos</router-link>
+                    </nav>
+                </div>
+                <div class="row">
+                    <router-view></router-view>
+                </div>
+
             </div>
-        </div>
+    </div>
     </footer>
-
+    </div>
     <script type="text/javascript" src="index.js"></script>
 </body>
 
