@@ -2,11 +2,13 @@
 
 html, body {
     height: 100%;
+
 }
 .wrapper {
     min-height: 100%;
     margin-bottom: -100px;
     padding-bottom: 100px;
+    background-color: #ffffff;
 }
 footer {
     height: 100px;
@@ -31,18 +33,19 @@ ul {
 }
 
 .itemdetail {
-    margin: 0px;
-    padding: 05px;
+
 }
 
 #cart {
     z-index: 1;
     margin: 20px 0;
-    float: right;
+
     background: white;
     box-shadow: 0 0 10px gray;
     /* width: 320px; */
     position: absolute;
+    margin-right: inherit;
+    right: 0;
     border-radius: 3px;
     padding: 20px;
     display:block
@@ -82,14 +85,16 @@ ul {
 }
 
 .bottom_col {
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 .bottom_col button {
     display: inline-block;
 }
 
-
+.inline {
+    display:inline;
+}
 
 .img{
     width:100px;
@@ -99,3 +104,6 @@ ul {
      object-fit:scale-down;
  
  }
+.fake_button {
+    cursor: pointer;
+}

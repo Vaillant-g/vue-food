@@ -22,7 +22,7 @@
                     <ul class="navbar-right">
                         <button v-on:click="displayCart = !displayCart"
                             style="border:none; background-color: transparent;">
-                            <a href="#" id="cartlogo"><i class="fa fa-shopping-cart"></i><span class="badge"
+                            <a href="#" id="cartlogo">Panier<i class="fa fa-shopping-cart"></i><span class="badge"
                                     v-on:click="displayCart = !displayCart"></span>
                                 ({{ this.totalOfProducts }})</span></a>
                         </button>
@@ -35,29 +35,34 @@
         <!--  panier  -->
         <transition name="fade">
             <div class="container">
-                <div id="cart" v-if="displayCart">
-                    <span v-show="this.totalAmount == 0">Votre panier est vide</span>
-                    <ul>
-                        <li v-for="item in products" v-if="item.ordered > 0">
-                            {{item.name}} : x {{item.ordered}}
-                            <span class="float-right left_margin">{{item.price * item.ordered}}€</span>
-                        </li>
-                    </ul>
-                    <p>
-                        <hr />Total : <button
-                            class="float-right btn btn-outline-success left_margin">{{this.totalAmount }}
-                            €</span></p>
+                <div class="row">
+                    <div class="col">
+                        <div id="cart" v-show="displayCart">
+                            <span v-show="this.totalAmount == 0">Votre panier est vide</span>
+                            <ul>
+                                <li v-for="item in products" v-if="item.ordered > 0">
+                                    <span class="fake_button" v-on:click="item.ordered += 1"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    <span class="fake_button" v-on:click="item.ordered -= 1"><i class="fa fa-minus" aria-hidden="true"></i></span> <!-- ne peut être négatif-->
+                                    &nbsp
+                                    {{item.name}} : x {{item.ordered}}
+                                    <span class="float-right left_margin">{{item.price * item.ordered}}€</span>
+                                </li>
+                            </ul>
+                            <p>
+                                <hr />Total : <button
+                                    class="float-right btn btn-outline-success left_margin">{{this.totalAmount }}
+                                    €</button></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </transition>
-        <!-- fin panier temporaire -->
         <router-view></router-view>
-        <!-- vue routage -->
         <div class="wrapper">
             <div class="container product-list">
                 <div class="row">
                     <div class="col">
-                        <h2>Bienvenue chez {{ restaurantName }} <span class="float-right"></h2>
+                        <h2>Bienvenue chez {{ restaurantName }} <span class="float-right" /></h2>
                     </div>
                     <div class='col-2'>
                         <select v-model="selected" class="form-control">
@@ -70,8 +75,7 @@
                 </div>
                 <div class container>
                     <div class="row">
-                        <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="addToOrder"
-                            v-on:item-removed="removeFromOrder" v-if="selected == 'Tout' || item.category == selected">
+                        <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="addToOrder"v-on:item-removed="removeFromOrder" v-if="selected == 'Tout' || item.category == selected">
                         </itemdetails>
                     </div>
                 </div>

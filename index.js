@@ -9,7 +9,7 @@ const about = {
 const desserts = { template: '<div>  </div>' }
 
 const routes = [
-    { name: 'home', path: '/', component: home },
+    { name: 'home', path: '/', component: app },
     { name: 'about', path: '/about', component: about }
 ]
 
@@ -20,7 +20,7 @@ const router = new VueRouter({
 Vue.component('itemdetails', {
     template: `
 
-            <div class="itemdetail col-3 shadow-sm p-3 mb-5 bg-white rounded" align-items-end>
+            <div class="itemdetail col-6 col-sm-4 col-md-3 shadow-sm p-3 mb-5 bg-white rounded" align-items-end>
             <img class="miniature_produit img-fluid rounded"  v-bind:src="item.picture">
                 <h4>
                     {{ item.name }}            
@@ -28,22 +28,22 @@ Vue.component('itemdetails', {
                 <p> {{ item.description }} </p>
                 <br/>
                 <div class="bottom_col">
-                    <span> {{ item.price }}€ 
-                    <button class="btn btn-outline-secondary float-right" v-on:click="addItem(item)"> Ajouter </button>
+                    <h5 class="inline"> {{ item.price }}€ &nbsp </h5>
+                    <h5 class="inline" v-if="item.ordered > 0"> {{ item.ordered }} ({{item.price * item.ordered}}€)</h5>
+                    <button class="btn btn-outline-success float-right" v-on:click="addItem(item)"> Ajouter </button>
                     <span class="float-right"> &nbsp </span>
-                    <button class="btn btn-outline-secondary float-right" v-on:click="removeItem(item)" v-if="item.ordered > 0"> - </button> </p>
-                    </div>
+                    <button class="btn btn-outline-danger float-right" v-on:click="removeItem(item)" v-if="item.ordered > 0"> - </button> </p>
+                    </span>
+                </div>
             </div>         
             
             `,
     props: ['item'],
     methods: {
         addItem: function (item) {
-            console.log(item);
             this.$emit('item-added', item)
         },
         removeItem: function (item) {
-            console.log(item);
             this.$emit('item-removed', item)
         }
     }
@@ -73,7 +73,6 @@ var app = new Vue({
             if (item.ordered > 0)
                 item.ordered -= 1;
         },
-
     },
     computed: {
         totalAmount() {
@@ -92,24 +91,4 @@ var app = new Vue({
         }
     },
     router,
-})
-
-Vue.directive('click-outside', {
-    priority: 700,
-    bind() {
-        let self = this
-        this.event = function (event) {
-            console.log('emitting event')
-            self.vm.$emit(self.expression, event)
-        }
-        this.el.addEventListener('click', this.stopProp)
-        document.body.addEventListener('click', this.event)
-    },
-
-    unbind() {
-        console.log('unbind')
-        this.el.removeEventListener('click', this.stopProp)
-        document.body.removeEventListener('click', this.event)
-    },
-    stopProp(event) { event.stopPropagation() }
 })
