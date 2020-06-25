@@ -36,6 +36,7 @@
         <transition name="fade">
             <div class="container">
                 <div id="cart" v-if="displayCart">
+                    <span v-show="this.totalAmount == 0">Votre panier est vide</span>
                     <ul>
                         <li v-for="item in products" v-if="item.ordered > 0">
                             {{item.name}} : x {{item.ordered}}
@@ -52,25 +53,27 @@
         <!-- fin panier temporaire -->
         <router-view></router-view>
         <!-- vue routage -->
-        <div class="container product-list">
-            <div class="row">
-                <div class="col">
-                    <h2>Bienvenue chez {{ restaurantName }} <span class="float-right"></h2>
-                </div>
-                <div class=''>
-                    <select v-model="selected" class="form-control">
-                        <option selected>Tout</option>
-                        <option>Plats</option>
-                        <option>Desserts</option>
-                    </select>
-                </div>
-
-            </div>
-            <div class container>
+        <div class="wrapper">
+            <div class="container product-list">
                 <div class="row">
-                    <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="addToOrder"
-                        v-on:item-removed="removeFromOrder" v-if="selected == 'Tout' || item.category == selected">
-                    </itemdetails>
+                    <div class="col">
+                        <h2>Bienvenue chez {{ restaurantName }} <span class="float-right"></h2>
+                    </div>
+                    <div class='col-2'>
+                        <select v-model="selected" class="form-control">
+                            <option selected>Tout</option>
+                            <option>Plats</option>
+                            <option>Desserts</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class container>
+                    <div class="row">
+                        <itemdetails v-for="item in products" v-bind:item="item" v-on:item-added="addToOrder"
+                            v-on:item-removed="removeFromOrder" v-if="selected == 'Tout' || item.category == selected">
+                        </itemdetails>
+                    </div>
                 </div>
             </div>
         </div>

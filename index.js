@@ -21,14 +21,16 @@ Vue.component('itemdetails', {
     template: `
 
             <div class="itemdetail col-3 shadow-sm p-3 mb-5 bg-white rounded" align-items-end>
-            <img class=" miniature_produit img-fluid rounded"  v-bind:src=" item.picture">
+            <img class="miniature_produit img-fluid rounded"  v-bind:src="item.picture">
                 <h4>
                     {{ item.name }}            
                 </h4>
                 <p> {{ item.description }} </p>
-                <div class="">
-                    <p> {{ item.price }}€ 
+                <br/>
+                <div class="bottom_col">
+                    <span> {{ item.price }}€ 
                     <button class="btn btn-outline-secondary float-right" v-on:click="addItem(item)"> Ajouter </button>
+                    <span class="float-right"> &nbsp </span>
                     <button class="btn btn-outline-secondary float-right" v-on:click="removeItem(item)" v-if="item.ordered > 0"> - </button> </p>
                     </div>
             </div>         
