@@ -1,4 +1,4 @@
-# vue-food
+# Vue-food
 C'est un projet Vue.js créé sans CLI : il suffit d'ouvrir le fichier index.html
 
 L'application permet :
